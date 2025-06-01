@@ -1,0 +1,176 @@
+<%- include('../partials/header', {req: req}) %>
+
+<section class="page-header">
+  <div class="container">
+    <h1>Gallery</h1>
+    <p>Explore our spaceship bridge simulator in action</p>
+  </div>
+</section>
+
+<section class="gallery-section section">
+  <div class="container">
+    <div class="gallery-filter">
+      <h2>Browse Our Gallery</h2>
+      <div class="filter-buttons">
+        <a
+          href="/gallery?category=all"
+          class="filter-btn <%= currentCategory === 'all' ? 'active' : '' %>"
+          >All</a
+        >
+        <% if (categories && categories.length > 0) { %> <%
+        categories.forEach(function(category) { %>
+        <a
+          href="/gallery?category=<%= category %>"
+          class="filter-btn <%= currentCategory === category ? 'active' : '' %>"
+          ><%= category.charAt(0).toUpperCase() + category.slice(1) %></a
+        >
+        <% }); %> <% } %>
+      </div>
+    </div>
+
+    <% if (images && images.length > 0) { %>
+    <div class="gallery-grid">
+      <% images.forEach(function(image) { %>
+      <div
+        class="gallery-item animate-on-scroll"
+        data-category="<%= image.category %>"
+      >
+        <img src="<%= image.imageUrl %>" alt="<%= image.title %>" />
+        <div class="gallery-overlay">
+          <div class="gallery-caption">
+            <h3><%= image.title %></h3>
+            <p><%= image.description %></p>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <div class="no-images">
+      <p>
+        No images available in this category. Check back soon as we update our
+        gallery regularly!
+      </p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="video-section section bg-light">
+  <div class="container">
+    <div class="section-title">
+      <h2>Experience in Action</h2>
+      <p>Watch our spaceship bridge simulator in action</p>
+    </div>
+
+    <div class="video-container">
+      <div class="video-wrapper animate-on-scroll">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="Stellar Simulations Experience"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-caption">
+          <h3>Bridge Simulator Tour</h3>
+          <p>
+            Take a virtual tour of our spaceship bridge simulator and see the
+            exciting features that await your crew.
+          </p>
+        </div>
+      </div>
+
+      <div class="video-wrapper animate-on-scroll">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="Stellar Simulations Mission"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-caption">
+          <h3>Mission Highlights</h3>
+          <p>
+            Watch highlights from a recent birthday party mission as the crew
+            navigates through an asteroid field and encounters alien vessels.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Want to Be Part of the Adventure?</h2>
+      <p>
+        Book our mobile spaceship bridge simulator for your next event and
+        create memories that will last a lifetime.
+      </p>
+      <a href="/booking" class="btn btn-accent btn-large">Book Now</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Gallery lightbox functionality
+    const galleryItems = document.querySelectorAll(".gallery-item");
+
+    galleryItems.forEach((item) => {
+      item.addEventListener("click", function () {
+        const imgSrc = this.querySelector("img").getAttribute("src");
+        const imgAlt = this.querySelector("img").getAttribute("alt");
+        const imgTitle = this.querySelector(".gallery-caption h3").textContent;
+        const imgDesc = this.querySelector(".gallery-caption p").textContent;
+
+        // Create lightbox
+        const lightbox = document.createElement("div");
+        lightbox.className = "lightbox";
+        lightbox.innerHTML = `
+                    <div class="lightbox-content">
+                        <button class="lightbox-close">&times;</button>
+                        <img src="${imgSrc}" alt="${imgAlt}">
+                        <div class="lightbox-caption">
+                            <h3>${imgTitle}</h3>
+                            <p>${imgDesc}</p>
+                        </div>
+                    </div>
+                `;
+
+        document.body.appendChild(lightbox);
+        document.body.classList.add("lightbox-open");
+
+        // Close lightbox on click
+        lightbox.addEventListener("click", function (e) {
+          if (
+            e.target === lightbox ||
+            e.target.classList.contains("lightbox-close")
+          ) {
+            document.body.removeChild(lightbox);
+            document.body.classList.remove("lightbox-open");
+          }
+        });
+
+        // Close lightbox on escape key
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            document.body.classList.contains("lightbox-open")
+          ) {
+            document.body.removeChild(lightbox);
+            document.body.classList.remove("lightbox-open");
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

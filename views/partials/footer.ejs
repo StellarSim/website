@@ -1,0 +1,50 @@
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/images/logo.png" alt="Stellar Simulations Logo">
+                    <p>Providing unforgettable spaceship bridge simulator experiences throughout Utah.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/gallery">Gallery</a></li>
+                        <li><a href="/testimonials">Testimonials</a></li>
+                        <li><a href="/booking">Book Now</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@stellarsimulations.com">info@stellarsimulations.com</a></p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+13859859152">(385) 985-9152</a></p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/stellarsimulations" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/stellarsimulations" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/stellarsimulations" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> Stellar Simulations. All rights reserved.</p>
+                <p>Serving all of Utah with our mobile spaceship bridge simulator.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/90540b4684.js" crossorigin="anonymous"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="/js/main.js"></script>
+    
+    <% if (typeof additionalScripts !== 'undefined' && additionalScripts) { %>
+        <% additionalScripts.forEach(function(script) { %>
+            <script src="<%= script %>"></script>
+        <% }); %>
+    <% } %>
+</body>
+</html>

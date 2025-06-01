@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <meta name="description" content="<%= description %>">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/site.webmanifest">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    
+    <style>
+        body {
+            background-color: var(--primary-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .login-container {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            padding: var(--spacing-lg);
+        }
+        
+        .login-logo {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .login-logo img {
+            height: 80px;
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .login-title h1 {
+            font-size: 1.8rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .login-form .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+        }
+        
+        .login-form button {
+            width: 100%;
+            margin-top: var(--spacing-md);
+        }
+        
+        .login-error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="/images/logo.png" alt="Stellar Simulations Logo">
+        </div>
+        
+        <div class="login-title">
+            <h1>Admin Login</h1>
+            <p>Enter your credentials to access the dashboard</p>
+        </div>
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+        <div class="login-error">
+            <p><%= error %></p>
+        </div>
+        <% } %>
+        
+        <form class="login-form" action="/admin/login" method="POST">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required value="<%= typeof email !== 'undefined' ? email : '' %>">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-accent">Login</button>
+        </form>
+        
+        <div class="back-link">
+            <a href="/">Return to Website</a>
+        </div>
+    </div>
+</body>
+</html>

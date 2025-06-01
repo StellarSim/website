@@ -1,0 +1,507 @@
+<%- include('../../partials/admin-header') %>
+
+<div class="admin-container">
+  <%- include('../../partials/admin-sidebar', {req: req}) %>
+
+  <div class="admin-content">
+    <div class="admin-header">
+      <div class="page-title">
+        <h1>Dashboard</h1>
+      </div>
+      <div class="header-actions">
+        <div class="user-dropdown">
+          <button class="user-dropdown-toggle">
+            <div class="user-avatar">
+              <%= user.name.charAt(0).toUpperCase() %>
+            </div>
+            <span class="user-name"><%= user.name %></span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="user-dropdown-menu">
+            <a href="/admin/profile" class="dropdown-item">
+              <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="/admin/logout" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <div class="card-icon primary">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="card-content">
+          <h3>Pending Bookings</h3>
+          <p><%= stats.pendingBookings %></p>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-icon success">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="card-content">
+          <h3>Approved Bookings</h3>
+          <p><%= stats.approvedBookings %></p>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-icon warning">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="card-content">
+          <h3>Unread Messages</h3>
+          <p><%= stats.unreadContacts %></p>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-icon info">
+          <i class="fas fa-image"></i>
+        </div>
+        <div class="card-content">
+          <h3>Gallery Items</h3>
+          <p><%= stats.galleryItems %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-panel">
+      <div class="panel-header">
+        <h2>Recent Booking Requests</h2>
+        <div class="panel-actions">
+          <a href="/admin/bookings" class="btn-admin btn-sm btn-outline"
+            >View All</a
+          >
+        </div>
+      </div>
+      <div class="panel-body">
+        <% if (recentBookings && recentBookings.length > 0) { %>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Event Type</th>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentBookings.forEach(function(booking) { %>
+              <tr>
+                <td><%= booking.name %></td>
+                <td><%= booking.eventType %></td>
+                <td><%= new Date(booking.eventDate).toLocaleDateString() %></td>
+                <td><%= booking.duration %></td>
+                <td>
+                  <span class="status-badge status-<%= booking.status %>">
+                    <%= booking.status %>
+                  </span>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a
+                      href="/admin/bookings/<%= booking._id %>"
+                      title="View Details"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    <% if (booking.status === 'pending') { %>
+                    <button
+                      class="approve-booking"
+                      data-id="<%= booking._id %>"
+                      title="Approve"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <button
+                      class="decline-booking"
+                      data-id="<%= booking._id %>"
+                      title="Decline"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <% } %>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+          <p>No booking requests yet.</p>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="content-panel">
+      <div class="panel-header">
+        <h2>Recent Contact Messages</h2>
+        <div class="panel-actions">
+          <a href="/admin/contacts" class="btn-admin btn-sm btn-outline"
+            >View All</a
+          >
+        </div>
+      </div>
+      <div class="panel-body">
+        <% if (recentContacts && recentContacts.length > 0) { %>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentContacts.forEach(function(contact) { %>
+              <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.email %></td>
+                <td><%= contact.subject %></td>
+                <td><%= new Date(contact.createdAt).toLocaleDateString() %></td>
+                <td>
+                  <span
+                    class="status-badge <%= contact.isRead ? 'status-approved' : 'status-pending' %>"
+                  >
+                    <%= contact.isRead ? 'Read' : 'Unread' %>
+                  </span>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <button
+                      class="view-contact"
+                      data-id="<%= contact._id %>"
+                      data-name="<%= contact.name %>"
+                      data-email="<%= contact.email %>"
+                      data-subject="<%= contact.subject %>"
+                      data-message="<%= contact.message %>"
+                      data-date="<%= new Date(contact.createdAt).toLocaleString() %>"
+                      title="View Message"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <% if (!contact.isRead) { %>
+                    <button
+                      class="mark-read"
+                      data-id="<%= contact._id %>"
+                      title="Mark as Read"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <% } %>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+          <p>No contact messages yet.</p>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Message Modal -->
+<div class="modal" id="contactModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalSubject"></h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="message-info">
+        <p>
+          <strong>From:</strong> <span id="modalName"></span> (<span
+            id="modalEmail"
+          ></span
+          >)
+        </p>
+        <p><strong>Date:</strong> <span id="modalDate"></span></p>
+      </div>
+      <div class="message-content">
+        <p id="modalMessage"></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-admin btn-primary" id="replyBtn">
+        Reply via Email
+      </button>
+      <button class="btn-admin btn-outline modal-close-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // User dropdown toggle
+    const userDropdownToggle = document.querySelector(".user-dropdown-toggle");
+    const userDropdownMenu = document.querySelector(".user-dropdown-menu");
+
+    if (userDropdownToggle && userDropdownMenu) {
+      userDropdownToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        userDropdownMenu.classList.toggle("show");
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".user-dropdown")) {
+          userDropdownMenu.classList.remove("show");
+        }
+      });
+    }
+
+    // Sidebar toggle
+    const sidebarToggle = document.querySelector(".sidebar-toggle");
+    const adminSidebar = document.querySelector(".admin-sidebar");
+    const adminContent = document.querySelector(".admin-content");
+
+    if (sidebarToggle && adminSidebar && adminContent) {
+      sidebarToggle.addEventListener("click", function () {
+        adminSidebar.classList.toggle("collapsed");
+        adminContent.classList.toggle("expanded");
+      });
+    }
+
+    // Contact message modal
+    const viewContactBtns = document.querySelectorAll(".view-contact");
+    const contactModal = document.getElementById("contactModal");
+    const modalClose = document.querySelectorAll(
+      ".modal-close, .modal-close-btn"
+    );
+    const modalName = document.getElementById("modalName");
+    const modalEmail = document.getElementById("modalEmail");
+    const modalSubject = document.getElementById("modalSubject");
+    const modalMessage = document.getElementById("modalMessage");
+    const modalDate = document.getElementById("modalDate");
+    const replyBtn = document.getElementById("replyBtn");
+
+    if (viewContactBtns.length > 0 && contactModal) {
+      viewContactBtns.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+          const name = this.getAttribute("data-name");
+          const email = this.getAttribute("data-email");
+          const subject = this.getAttribute("data-subject");
+          const message = this.getAttribute("data-message");
+          const date = this.getAttribute("data-date");
+
+          modalName.textContent = name;
+          modalEmail.textContent = email;
+          modalSubject.textContent = subject;
+          modalMessage.textContent = message;
+          modalDate.textContent = date;
+
+          contactModal.style.display = "flex";
+
+          // Mark as read
+          if (
+            !this.closest("tr")
+              .querySelector(".status-badge")
+              .classList.contains("status-approved")
+          ) {
+            fetch(`/admin/contacts/${id}/read`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  this.closest("tr").querySelector(
+                    ".status-badge"
+                  ).textContent = "Read";
+                  this.closest("tr")
+                    .querySelector(".status-badge")
+                    .classList.remove("status-pending");
+                  this.closest("tr")
+                    .querySelector(".status-badge")
+                    .classList.add("status-approved");
+
+                  const markReadBtn =
+                    this.closest("tr").querySelector(".mark-read");
+                  if (markReadBtn) {
+                    markReadBtn.remove();
+                  }
+
+                  // Update unread count in header
+                  const unreadCount = document.querySelector(
+                    ".card-content p:nth-child(2)"
+                  );
+                  if (unreadCount) {
+                    unreadCount.textContent =
+                      parseInt(unreadCount.textContent) - 1;
+                  }
+                }
+              })
+              .catch((error) =>
+                console.error("Error marking message as read:", error)
+              );
+          }
+        });
+      });
+
+      modalClose.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          contactModal.style.display = "none";
+        });
+      });
+
+      window.addEventListener("click", function (e) {
+        if (e.target === contactModal) {
+          contactModal.style.display = "none";
+        }
+      });
+
+      if (replyBtn) {
+        replyBtn.addEventListener("click", function () {
+          const email = modalEmail.textContent;
+          const subject = modalSubject.textContent;
+          window.location.href = `mailto:${email}?subject=Re: ${subject}`;
+        });
+      }
+    }
+
+    // Approve/Decline booking
+    const approveButtons = document.querySelectorAll(".approve-booking");
+    const declineButtons = document.querySelectorAll(".decline-booking");
+
+    if (approveButtons.length > 0) {
+      approveButtons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+
+          if (confirm("Are you sure you want to approve this booking?")) {
+            updateBookingStatus(id, "approved", this);
+          }
+        });
+      });
+    }
+
+    if (declineButtons.length > 0) {
+      declineButtons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+
+          if (confirm("Are you sure you want to decline this booking?")) {
+            updateBookingStatus(id, "declined", this);
+          }
+        });
+      });
+    }
+
+    function updateBookingStatus(id, status, button) {
+      fetch(`/admin/bookings/${id}/status`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            const row = button.closest("tr");
+            const statusBadge = row.querySelector(".status-badge");
+
+            statusBadge.textContent = status;
+            statusBadge.className = `status-badge status-${status}`;
+
+            // Remove action buttons
+            row
+              .querySelectorAll(".approve-booking, .decline-booking")
+              .forEach((btn) => {
+                btn.remove();
+              });
+
+            // Update counts in header
+            const pendingCount = document.querySelector(
+              ".dashboard-cards .dashboard-card:nth-child(1) .card-content p"
+            );
+            const approvedCount = document.querySelector(
+              ".dashboard-cards .dashboard-card:nth-child(2) .card-content p"
+            );
+
+            if (pendingCount) {
+              pendingCount.textContent = parseInt(pendingCount.textContent) - 1;
+            }
+
+            if (approvedCount && status === "approved") {
+              approvedCount.textContent =
+                parseInt(approvedCount.textContent) + 1;
+            }
+          }
+        })
+        .catch((error) =>
+          console.error("Error updating booking status:", error)
+        );
+    }
+
+    // Mark contact as read
+    const markReadButtons = document.querySelectorAll(".mark-read");
+
+    if (markReadButtons.length > 0) {
+      markReadButtons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+
+          fetch(`/admin/contacts/${id}/read`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                const row = this.closest("tr");
+                const statusBadge = row.querySelector(".status-badge");
+
+                statusBadge.textContent = "Read";
+                statusBadge.classList.remove("status-pending");
+                statusBadge.classList.add("status-approved");
+
+                // Remove mark read button
+                this.remove();
+
+                // Update unread count in header
+                const unreadCount = document.querySelector(
+                  ".dashboard-cards .dashboard-card:nth-child(3) .card-content p"
+                );
+                if (unreadCount) {
+                  unreadCount.textContent =
+                    parseInt(unreadCount.textContent) - 1;
+                }
+              }
+            })
+            .catch((error) =>
+              console.error("Error marking message as read:", error)
+            );
+        });
+      });
+    }
+  });
+</script>
+
+<%- include('../../partials/admin-footer') %>

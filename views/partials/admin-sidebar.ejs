@@ -1,0 +1,47 @@
+<div class="admin-sidebar">
+    <div class="sidebar-header">
+        <img src="/images/logo-white.png" alt="Stellar Simulations Logo">
+        <button class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="sidebar-nav">
+        <a href="/admin/dashboard" class="nav-item <%= req.path === '/admin/dashboard' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="fas fa-tachometer-alt"></i></span>
+            <span class="nav-text">Dashboard</span>
+        </a>
+        
+        <a href="/admin/bookings" class="nav-item <%= req.path.startsWith('/admin/bookings') ? 'active' : '' %>">
+            <span class="nav-icon"><i class="fas fa-calendar-alt"></i></span>
+            <span class="nav-text">Bookings</span>
+        </a>
+        
+        <a href="/admin/calendar" class="nav-item <%= req.path === '/admin/calendar' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="fas fa-calendar-week"></i></span>
+            <span class="nav-text">Calendar</span>
+        </a>
+        
+        <a href="/admin/contacts" class="nav-item <%= req.path === '/admin/contacts' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="fas fa-envelope"></i></span>
+            <span class="nav-text">Messages</span>
+        </a>
+        
+        <a href="/admin/gallery" class="nav-item <%= req.path === '/admin/gallery' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="fas fa-images"></i></span>
+            <span class="nav-text">Gallery</span>
+        </a>
+        
+        <a href="/admin/testimonials" class="nav-item <%= req.path === '/admin/testimonials' ? 'active' : '' %>">
+            <span class="nav-icon"><i class="fas fa-star"></i></span>
+            <span class="nav-text">Testimonials</span>
+        </a>
+    </div>
+    
+    <div class="sidebar-footer">
+        <a href="/admin/logout">
+            <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+            <span class="nav-text">Logout</span>
+        </a>
+    </div>
+</div>

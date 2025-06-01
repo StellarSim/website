@@ -1,0 +1,293 @@
+<%- include('../partials/header', {req: req}) %>
+
+<section class="page-header">
+    <div class="container">
+        <h1>Book Your Experience</h1>
+        <p>Reserve our spaceship bridge simulator for your next event</p>
+    </div>
+</section>
+
+<section class="booking-section section">
+    <div class="container">
+        <% if (typeof success !== 'undefined' && success) { %>
+        <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <h3>Booking Request Submitted!</h3>
+            <p>Thank you for your booking request. We've sent a confirmation email to your address. Our team will review your request and get back to you shortly.</p>
+        </div>
+        <% } %>
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>Oops! Something went wrong.</h3>
+            <p><%= error %></p>
+        </div>
+        <% } %>
+        
+        <div class="booking-container">
+            <div class="booking-info">
+                <h2>Plan Your Space Adventure</h2>
+                <p>Our mobile spaceship bridge simulator brings the excitement of space exploration directly to your location. Choose from our flexible booking options to create the perfect experience for your event.</p>
+                
+                <div class="booking-options">
+                    <div class="booking-option">
+                        <h3>1-Hour Experience</h3>
+                        <p>Perfect for quick events or small groups. Includes setup, training, and 1 mission.</p>
+                        <ul>
+                            <li>Up to 6 participants</li>
+                            <li>Basic mission scenarios</li>
+                            <li>Digital photos of your crew</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="booking-option">
+                        <h3>2.5-Hour Experience</h3>
+                        <p>Perfect for birthday parties and smaller events. Includes setup, training, and 1-2 missions.</p>
+                        <ul>
+                            <li>Up to 10 participants</li>
+                            <li>Basic mission scenarios</li>
+                            <li>Digital photos of your crew</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="booking-option">
+                        <h3>5-Hour Experience</h3>
+                        <p>Our most popular option. Great for longer events with more participants or multiple groups.</p>
+                        <ul>
+                            <li>Up to 20 participants</li>
+                            <li>Advanced mission scenarios</li>
+                            <li>Digital photos and video highlights</li>
+                            <li>Crew certificates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="booking-option">
+                        <h3>10-Hour Experience</h3>
+                        <p>Full-day immersion. Perfect for corporate events, schools, or large gatherings.</p>
+                        <ul>
+                            <li>Unlimited participants (rotating crews)</li>
+                            <li>Custom mission scenarios</li>
+                            <li>Digital media package</li>
+                            <li>Crew certificates and badges</li>
+                            <li>Extended gameplay options</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="booking-notes">
+                    <h3>Important Information</h3>
+                    <ul>
+                        <li>We serve all locations throughout Utah.</li>
+                        <li>Bookings should be made at least 2 weeks in advance.</li>
+                        <li>A level parking area of at least 40' x 15' is required for our trailer.</li>
+                        <li>Electrical hookup (standard 120V outlet) is needed.</li>
+                        <li>Prices vary based on date, location, and package selected.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="booking-form">
+                <h2>Request a Booking</h2>
+                <p>Fill out the form below to request your preferred date and time. We'll contact you to confirm availability and provide pricing information.</p>
+                
+                <form action="/booking" method="POST">
+                    <h3>Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required value="<%= typeof formData !== 'undefined' ? formData.name || '' : '' %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required value="<%= typeof formData !== 'undefined' ? formData.email || '' : '' %>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required value="<%= typeof formData !== 'undefined' ? formData.phone || '' : '' %>">
+                        </div>
+                    </div>
+                    
+                    <h3>Event Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventType">Event Type *</label>
+                            <select id="eventType" name="eventType" required>
+                                <option value="" disabled selected>Select event type</option>
+                                <option value="Birthday Party" <%= typeof formData !== 'undefined' && formData.eventType === 'Birthday Party' ? 'selected' : '' %>>Birthday Party</option>
+                                <option value="Corporate Event" <%= typeof formData !== 'undefined' && formData.eventType === 'Corporate Event' ? 'selected' : '' %>>Corporate Event</option>
+                                <option value="School Event" <%= typeof formData !== 'undefined' && formData.eventType === 'School Event' ? 'selected' : '' %>>School Event</option>
+                                <option value="Family Gathering" <%= typeof formData !== 'undefined' && formData.eventType === 'Family Gathering' ? 'selected' : '' %>>Family Gathering</option>
+                                <option value="Other" <%= typeof formData !== 'undefined' && formData.eventType === 'Other' ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Event Date *</label>
+                            <input type="date" id="eventDate" name="eventDate" required value="<%= typeof formData !== 'undefined' ? formData.eventDate || '' : '' %>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="duration">Duration *</label>
+                            <select id="duration" name="duration" required>
+                                <option value="" disabled selected>Select duration</option>
+                                <option value="2.5-hour" <%= typeof formData !== 'undefined' && formData.duration === '2.5-hour' ? 'selected' : '' %>>2.5-Hour Experience</option>
+                                <option value="5-hour" <%= typeof formData !== 'undefined' && formData.duration === '5-hour' ? 'selected' : '' %>>5-Hour Experience</option>
+                                <option value="10-hour" <%= typeof formData !== 'undefined' && formData.duration === '10-hour' ? 'selected' : '' %>>10-Hour Experience</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="attendees">Number of Attendees *</label>
+                            <input type="number" id="attendees" name="attendees" min="1" max="100" required value="<%= typeof formData !== 'undefined' ? formData.attendees || '' : '' %>">
+                        </div>
+                    </div>
+                    
+                    <h3>Location Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="address">Street Address *</label>
+                            <input type="text" id="address" name="address" required value="<%= typeof formData !== 'undefined' ? formData.address || '' : '' %>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required value="<%= typeof formData !== 'undefined' ? formData.city || '' : '' %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" value="Utah" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">Zip Code *</label>
+                            <input type="text" id="zipCode" name="zipCode" required value="<%= typeof formData !== 'undefined' ? formData.zipCode || '' : '' %>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="specialRequests">Special Requests or Notes</label>
+                            <textarea id="specialRequests" name="specialRequests" rows="4"><%= typeof formData !== 'undefined' ? formData.specialRequests || '' : '' %></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-accent btn-large">Submit Booking Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq-section section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Common questions about our spaceship bridge simulator experience</p>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How many people can participate at once?</h3>
+                    <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our spaceship bridge simulator can accommodate up to 6 crew members at once. For larger groups, participants can rotate through different missions, allowing everyone to experience the simulator.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What ages is this appropriate for?</h3>
+                    <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our simulator is designed for ages 8 and up. Younger children may participate with adult assistance. The experience can be tailored to different age groups and skill levels.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How much space do you need for setup?</h3>
+                    <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>We require a level parking area of approximately 40' x 15' for our trailer. We also need access to a standard 120V electrical outlet. Our team will handle all setup and teardown.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What happens if it rains or snows on the day of our event?</h3>
+                    <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our simulator is housed in a climate-controlled trailer, so weather generally isn't an issue. However, in cases of severe weather that might make travel unsafe, we'll work with you to reschedule your event.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How far in advance should we book?</h3>
+                    <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>We recommend booking at least 2-3 weeks in advance, especially for weekend dates which tend to fill up quickly. For special occasions like birthdays or corporate events, booking 1-2 months ahead is ideal.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Do you require a deposit?</h3>
+                    <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we require a 50% deposit to secure your booking date. The remaining balance is due on the day of the event. We accept all major credit cards, cash, and checks.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // FAQ toggles
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const toggle = item.querySelector('.faq-toggle');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                        otherItem.querySelector('.faq-toggle i').className = 'fas fa-plus';
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+                
+                if (item.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    toggle.querySelector('i').className = 'fas fa-minus';
+                } else {
+                    answer.style.maxHeight = null;
+                    toggle.querySelector('i').className = 'fas fa-plus';
+                }
+            });
+        });
+    });
+</script>
+
+<%- include('../partials/footer') %>

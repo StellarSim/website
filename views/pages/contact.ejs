@@ -1,0 +1,335 @@
+<%- include('../partials/header', {req: req}) %>
+
+<section class="page-header">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p>Get in touch with the Stellar Simulations team</p>
+  </div>
+</section>
+
+<section class="contact-section section">
+  <div class="container">
+    <% if (typeof success !== 'undefined' && success) { %>
+    <div class="success-message">
+      <i class="fas fa-check-circle"></i>
+      <h3>Message Sent Successfully!</h3>
+      <p>
+        Thank you for contacting us. We've received your message and will get
+        back to you as soon as possible.
+      </p>
+    </div>
+    <% } %> <% if (typeof error !== 'undefined' && error) { %>
+    <div class="error-message">
+      <i class="fas fa-exclamation-circle"></i>
+      <h3>Oops! Something went wrong.</h3>
+      <p><%= error %></p>
+    </div>
+    <% } %>
+
+    <div class="contact-content">
+      <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p>
+          Have questions about our spaceship bridge simulator or want to learn
+          more about our services? We'd love to hear from you!
+        </p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Email</h3>
+              <p>
+                <a href="mailto:info@stellarsimulations.com"
+                  >info@stellarsimulations.com</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Phone</h3>
+              <p><a href="tel:+13859859152">(385) 985-9152</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Location</h3>
+              <p>
+                We serve all of Utah with our mobile spaceship bridge simulator.
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-text">
+              <h3>Hours</h3>
+              <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+              <p>Saturday: 10:00 AM - 4:00 PM</p>
+              <p>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <h3>Connect With Us</h3>
+          <div class="social-icons">
+            <a
+              href="https://facebook.com/stellarsimulations"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://instagram.com/stellarsimulations"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="https://youtube.com/stellarsimulations"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a
+              href="https://twitter.com/stellarsims"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h2>Send Us a Message</h2>
+        <p>
+          Fill out the form below and we'll get back to you as soon as possible.
+        </p>
+
+        <form action="/contact" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                value="<%= typeof formData !== 'undefined' ? formData.name || '' : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                value="<%= typeof formData !== 'undefined' ? formData.email || '' : '' %>"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value="<%= typeof formData !== 'undefined' ? formData.phone || '' : '' %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                required
+                value="<%= typeof formData !== 'undefined' ? formData.subject || '' : '' %>"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="message">Message *</label>
+              <textarea id="message" name="message" rows="6" required>
+<%= typeof formData !== 'undefined' ? formData.message || '' : '' %></textarea
+              >
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-accent btn-large">
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section section bg-light">
+  <div class="container">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers to common questions</p>
+    </div>
+
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How far in advance should I book?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            We recommend booking at least 2-3 weeks in advance, especially for
+            weekend dates which tend to fill up quickly. For special occasions
+            like birthdays or corporate events, booking 1-2 months ahead is
+            ideal.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>What areas do you serve?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            We currently serve all of Utah, including Salt Lake City, Provo,
+            Ogden, Park City, St. George, and surrounding areas. For locations
+            outside of Utah, please contact us to discuss options.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>How much does it cost?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Pricing varies based on the duration of your event, day of the week,
+            and location. Our 2.5-hour experiences typically start at $299,
+            while our 5-hour and 10-hour experiences have different rates.
+            Contact us for a custom quote for your specific event.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <h3>Can I visit your facility before booking?</h3>
+          <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            As a mobile experience, we don't have a permanent facility to visit.
+            However, we do host occasional public events where you can
+            experience our simulator firsthand. Follow us on social media or
+            sign up for our newsletter to stay informed about upcoming public
+            events.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter-section section">
+  <div class="container">
+    <div class="newsletter-content">
+      <h2>Stay Updated</h2>
+      <p>
+        Subscribe to our newsletter for the latest news, special offers, and
+        upcoming public events.
+      </p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email address" required />
+        <button type="submit" class="btn btn-accent">Subscribe</button>
+      </form>
+      <p class="newsletter-privacy">
+        We respect your privacy and will never share your information.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // FAQ toggles
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+      const question = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      const toggle = item.querySelector(".faq-toggle");
+
+      question.addEventListener("click", () => {
+        // Close all other items
+        faqItems.forEach((otherItem) => {
+          if (otherItem !== item && otherItem.classList.contains("active")) {
+            otherItem.classList.remove("active");
+            otherItem.querySelector(".faq-answer").style.maxHeight = null;
+            otherItem.querySelector(".faq-toggle i").className = "fas fa-plus";
+          }
+        });
+
+        // Toggle current item
+        item.classList.toggle("active");
+
+        if (item.classList.contains("active")) {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+          toggle.querySelector("i").className = "fas fa-minus";
+        } else {
+          answer.style.maxHeight = null;
+          toggle.querySelector("i").className = "fas fa-plus";
+        }
+      });
+    });
+
+    // Newsletter form submission (prevent default for now)
+    const newsletterForm = document.querySelector(".newsletter-form");
+    if (newsletterForm) {
+      newsletterForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+
+        // Here you would typically send this to your backend
+        // For now, just show a success message
+        this.innerHTML = `<p class="success">Thank you for subscribing! We've sent a confirmation email to ${email}.</p>`;
+      });
+    }
+  });
+</script>
+
+<%- include('../partials/footer') %>

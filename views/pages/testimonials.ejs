@@ -1,0 +1,211 @@
+<%- include('../partials/header', {req: req}) %>
+
+<section class="page-header">
+  <div class="container">
+    <h1>Testimonials</h1>
+    <p>
+      What our customers say about their spaceship bridge simulator experience
+    </p>
+  </div>
+</section>
+
+<section class="testimonials-section section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Customer Reviews</h2>
+      <p>
+        Hear from those who have experienced our spaceship bridge simulator
+        firsthand
+      </p>
+    </div>
+
+    <% if (testimonials && testimonials.length > 0) { %>
+    <div class="testimonials-grid">
+      <% testimonials.forEach(function(testimonial) { %>
+      <div class="testimonial-card animate-on-scroll">
+        <div class="testimonial-header">
+          <div class="testimonial-rating">
+            <% for (let i = 0; i < testimonial.rating; i++) { %>
+            <i class="fas fa-star"></i>
+            <% } %> <% for (let i = testimonial.rating; i < 5; i++) { %>
+            <i class="far fa-star"></i>
+            <% } %>
+          </div>
+          <% if (testimonial.eventType) { %>
+          <div class="testimonial-event-type"><%= testimonial.eventType %></div>
+          <% } %>
+        </div>
+        <div class="testimonial-content">
+          <p>"<%= testimonial.content %>"</p>
+        </div>
+        <div class="testimonial-author">
+          <h3><%= testimonial.name %></h3>
+          <% if (testimonial.role) { %>
+          <p><%= testimonial.role %></p>
+          <% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <div class="no-testimonials">
+      <p>
+        No testimonials available yet. Be the first to experience our spaceship
+        bridge simulator and leave a review!
+      </p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="review-stats section bg-light">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">4.9</div>
+        <div class="stat-label">Average Rating</div>
+        <div class="stat-stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Happy Customers</div>
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+      </div>
+
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">25+</div>
+        <div class="stat-label">Locations Served</div>
+        <div class="stat-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+      </div>
+
+      <div class="stat-item animate-on-scroll">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Events Hosted</div>
+        <div class="stat-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial-video section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Hear From Our Customers</h2>
+      <p>Watch video testimonials from our happy customers</p>
+    </div>
+
+    <div class="video-testimonials">
+      <div class="video-testimonial animate-on-scroll">
+        <div class="video-wrapper">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Customer Testimonial"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-testimonial-info">
+          <h3>Johnson Family Birthday Party</h3>
+          <p>
+            "The kids are still talking about their space adventure weeks later.
+            Best birthday party ever!"
+          </p>
+        </div>
+      </div>
+
+      <div class="video-testimonial animate-on-scroll">
+        <div class="video-wrapper">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Corporate Testimonial"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-testimonial-info">
+          <h3>Tech Innovations Team Building</h3>
+          <p>
+            "Our team is still talking about the lessons they learned about
+            communication and leadership during our mission."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="leave-review section bg-light">
+  <div class="container">
+    <div class="review-cta">
+      <h2>Enjoyed Your Experience?</h2>
+      <p>
+        We'd love to hear about your adventure aboard our spaceship bridge
+        simulator. Share your experience on your favorite platform or contact us
+        directly.
+      </p>
+      <div class="review-platforms">
+        <a
+          href="https://www.google.com/maps"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="review-platform"
+        >
+          <i class="fab fa-google"></i>
+          <span>Google</span>
+        </a>
+        <a
+          href="https://www.facebook.com/stellarsimulations"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="review-platform"
+        >
+          <i class="fab fa-facebook-f"></i>
+          <span>Facebook</span>
+        </a>
+        <a
+          href="https://www.yelp.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="review-platform"
+        >
+          <i class="fab fa-yelp"></i>
+          <span>Yelp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to Create Your Own Story?</h2>
+      <p>
+        Book our mobile spaceship bridge simulator for your next event and
+        experience the adventure for yourself.
+      </p>
+      <a href="/booking" class="btn btn-accent btn-large">Book Now</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
